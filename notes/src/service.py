@@ -84,10 +84,11 @@ def change_note(id, head, body, json_file=MY_NOTE):
     try:
         with open(json_file, 'r', encoding='utf8') as f:
             data = json.load(f)
+        f.close()
     except FileNotFoundError:
         print(FILE_NOT_FOUND)
-    finally:
-        f.close()
+        return
+
     try:
         key = KEY_CONFIG + str(id)
         if key not in data.keys():
@@ -110,10 +111,10 @@ def delete_note(id, json_file=MY_NOTE):
     try:
         with open(json_file, 'r', encoding='utf8') as f:
             data = json.load(f)
+        f.close()
     except FileNotFoundError:
         print(FILE_NOT_FOUND)
-    finally:
-        f.close()
+        return
     try:
         key = KEY_CONFIG + str(id)
         if key not in data.keys():
@@ -126,14 +127,15 @@ def delete_note(id, json_file=MY_NOTE):
             json.dump(data, f_out, indent=2)
         f_out.close()
 
+
 def show_note(id, json_file=MY_NOTE):
     try:
         with open(json_file, 'r', encoding='utf8') as f:
             data = json.load(f)
+        f.close()
     except FileNotFoundError:
         print(FILE_NOT_FOUND)
-    finally:
-        f.close()
+        return
     try:
         key = KEY_CONFIG + str(id)
         if key not in data.keys():
@@ -148,10 +150,10 @@ def show_notes(json_file=MY_NOTE):
     try:
         with open(json_file, 'r', encoding='utf8') as f:
             data = json.load(f)
+        f.close()
     except FileNotFoundError:
         print(FILE_NOT_FOUND)
-    finally:
-        f.close()
+        return
     for key in data.keys():
         print_note(data, key)
 
@@ -160,10 +162,10 @@ def clear_notes(json_file=MY_NOTE):
     try:
         with open(json_file, 'r', encoding='utf8') as f:
             data = json.load(f)
+        f.close()
     except FileNotFoundError:
         print(FILE_NOT_FOUND)
-    finally:
-        f.close()
+        return
     data.clear()
     with open(json_file, 'w', encoding='utf8') as f_out:
         json.dump(data, f_out, indent=2)
@@ -200,10 +202,3 @@ def set_head():
 
 def set_body():
     return input('Введите заметку:\t\t')
-
-
-
-
-
-
-
