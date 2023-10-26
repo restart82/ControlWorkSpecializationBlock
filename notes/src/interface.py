@@ -5,7 +5,7 @@ COMMAND_ERROR = 'Неверная команда'
 instruction = 'Выберите действие: \n' \
             '\t1 - Добавить заметку \n\t2 - Редактировать заметку \n' \
             '\t3 - Удалить заметку \n\t4 - Показать заметку \n' \
-            '\t5 - Показать все заметки\n\t6 - Очистить все заметки \n' \
+            '\t5 - Показать все заметки с выборкой по дате\n\t6 - Очистить все заметки \n' \
             '\t7 - Выход \n'
 
 confid_instruction = 'Вы уверены? \n\t1 - ДА \n\t2 - НЕТ \n'
@@ -40,7 +40,9 @@ def tasks(command):
         case '4':
             show_note(set_id())
         case '5':
-            show_notes()
+            left = input("Введите левую границу даты [dd.mm.yyyy] --> ")
+            right = input("Введите правую границу даты [dd.mm.yyyy] --> ")
+            show_notes(left, right)
         case '6':
             print(confid_instruction)
             confid(input(' --> '))

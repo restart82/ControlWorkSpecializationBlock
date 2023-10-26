@@ -1,5 +1,6 @@
 import datetime
 import json
+import traceback
 
 
 def check_last_id():
@@ -146,7 +147,19 @@ def show_note(id, json_file=MY_NOTE):
         print_note(data, key)
 
 
-def show_notes(json_file=MY_NOTE):
+def show_notes(left_date, right_date, json_file=MY_NOTE):
+    try:
+        left_date = left_date.split(".")
+        left_date = datetime.datetime(int(left_date[2]), int(left_date[1]), int(left_date[0]))
+        right_date = right_date.split(".")
+        right_date = datetime.datetime(int(right_date[2]), int(right_date[1]), int(right_date[0]))
+    except ValueError:
+        print("Некорректная дата")
+        print(traceback.format_exc())
+        return
+    except IndexError:
+        print("Некорректная дата")
+        return
     try:
         with open(json_file, 'r', encoding='utf8') as f:
             data = json.load(f)
@@ -155,7 +168,11 @@ def show_notes(json_file=MY_NOTE):
         print(FILE_NOT_FOUND)
         return
     for key in data.keys():
-        print_note(data, key)
+        data_date = data[key]["date"]
+        data_date = data_date.split(".")
+        data_date = datetime.datetime(int(data_date[2]), int(data_date[1]), int(data_date[0]))
+        if left_date <= data_date <= right_date:
+            print_note(data, key)
 
 
 def clear_notes(json_file=MY_NOTE):
