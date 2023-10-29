@@ -40,8 +40,8 @@ def tasks(command):
         case '4':
             show_note(set_id())
         case '5':
-            left = input("Введите левую границу даты [dd.mm.yyyy] --> ")
-            right = input("Введите правую границу даты [dd.mm.yyyy] --> ")
+            left = set_date("Введите левую границу даты [dd.mm.yyyy] --> ")
+            right = set_date("Введите правую границу даты [dd.mm.yyyy] --> ")
             show_notes(left, right)
         case '6':
             print(confid_instruction)

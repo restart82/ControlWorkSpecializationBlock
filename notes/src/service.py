@@ -10,7 +10,7 @@ def check_last_id():
     return int(number)
 
 
-MY_NOTE = 'test_note.json'
+MY_NOTE = 'note.json'
 LAST_ID = 'last_id.txt'
 ID = check_last_id()
 KEY_CONFIG = 'Note #'
@@ -219,3 +219,7 @@ def set_head():
 
 def set_body():
     return input('Введите заметку:\t\t')
+
+
+def set_date(message):
+    return input(message)
