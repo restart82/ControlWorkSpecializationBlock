@@ -51,18 +51,27 @@ public class Toyshop implements Lottery {
         return toyQueue.size();
     }
 
+    public int getToyTotalQuantity () {
+        int result = 0;
+        for (Toy toy: toyQueue) {
+            result += toy.getQuantity();
+        }
+        return result;
+    }
+
     @Override
     public void put(String string) {
         String[] parseString = string.split(" ");
-        if (parseString.length != 2) {
+        if (parseString.length != 3) {
             throw new ArraySizeException("Некорректная длина посылки", parseString.length);
         }
-        if (!isDigit(parseString[0])) {
+        if (!isDigit(parseString[0]) || !isDigit(parseString[2])) {
             throw new RuntimeException("Должна быть цифра");
         }
         int weight = Integer.parseInt(parseString[0]);
         String name = parseString[1];
-        Toy toy = new Toy(toyID++, weight, name);
+        int quantity = Integer.parseInt(parseString[2]);
+        Toy toy = new Toy(toyID++, weight, name, quantity);
         toyQueue.add(toy);
     }
 
@@ -86,7 +95,8 @@ public class Toyshop implements Lottery {
         System.out.printf(message);
         writeInFile(message);
         // Убираем победителя из общего списка
-        toyQueue.delete(findToyByID(winner));
+//        toyQueue.delete(findToyByID(winner));
+        removeToy(findToyByID(winner));
     }
 
     private static boolean isDigit(String str) {
@@ -119,5 +129,14 @@ public class Toyshop implements Lottery {
             }
         }
         return winner;
+    }
+
+    private void removeToy(Toy toy) {
+        int newQuantity = toy.getQuantity() - 1;
+        if (newQuantity == 0) {
+            toyQueue.delete(toy);
+        } else {
+            toy.setQuantity(newQuantity);
+        }
     }
 }

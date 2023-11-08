@@ -4,10 +4,12 @@ public class Toy implements ToyItem {
     private int id;
     private int weight;
     private String name;
-    public Toy (int id, int weight, String name) {
+    private int quantity;
+    public Toy (int id, int weight, String name, int quantity) {
         this.id = id;
         this.weight = weight;
         this.name = name;
+        this.quantity = quantity;
     }
 
     public int getID() {
@@ -22,6 +24,14 @@ public class Toy implements ToyItem {
         this.weight = weight;
     }
 
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
     public String getName() {
         return name;
     }
@@ -34,6 +44,8 @@ public class Toy implements ToyItem {
                 name +
                 "\n\t\tВес выпадания -\t" +
                 weight +
+                "\n\t\tКоличество -\t" +
+                quantity +
                 "\n\n";
     }
 
