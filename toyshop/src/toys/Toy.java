@@ -18,6 +18,10 @@ public class Toy implements ToyItem {
         return weight;
     }
 
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
+
     public String getName() {
         return name;
     }

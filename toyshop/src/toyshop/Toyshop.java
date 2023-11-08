@@ -11,6 +11,7 @@ import java.util.Random;
 public class Toyshop implements Lottery {
 
     private int toyID = 1;
+    private int getCounter = 1;
     private ToyQueue toyQueue;
 
     public Toyshop() {
@@ -46,6 +47,10 @@ public class Toyshop implements Lottery {
         fileWriter.startWrite();
     }
 
+    public int getSize() {
+        return toyQueue.size();
+    }
+
     @Override
     public void put(String string) {
         String[] parseString = string.split(" ");
@@ -62,8 +67,39 @@ public class Toyshop implements Lottery {
     }
 
     @Override
-    public int get() {
-        int result = 0;
+    public void changeWeight(int id, int newWeight) {
+        try {
+            Toy toy = findToyByID(id);
+            toy.setWeight(newWeight);
+        } catch (NullPointerException e) {
+            System.out.println("Нет игрушки с ID: " + id);
+        }
+    }
+
+    @Override
+    public void get() throws FileInitException{
+        // Определяем id
+        int winner = getWinnerID();
+        // Записываем в файл
+        String message = String.format("Победитель #%d:\t%s\n",
+                getCounter++, findToyByID(winner).getName());
+        System.out.printf(message);
+        writeInFile(message);
+        // Убираем победителя из общего списка
+        toyQueue.delete(findToyByID(winner));
+    }
+
+    private static boolean isDigit(String str) {
+        try {
+            Double.parseDouble(str);
+            return true;
+        } catch(NumberFormatException e){
+            return false;
+        }
+    }
+
+    private int getWinnerID () {
+        int winner = 0;
         int[] numbers = new int[toyQueue.size()];
         int[] points = new int[toyQueue.size()];
         int pointsSum = 0;
@@ -78,22 +114,10 @@ public class Toyshop implements Lottery {
         for (int i = 0; i < points.length; i++) {
             index -= points[i];
             if(index < 0) {
-                result = numbers[i];
+                winner = numbers[i];
                 break;
             }
         }
-//        System.out.println(Arrays.toString(numbers));
-//        System.out.println(Arrays.toString(points));
-//        System.out.println(pointsSum);
-        return result;
-    }
-
-    private static boolean isDigit(String str) {
-        try {
-            Double.parseDouble(str);
-            return true;
-        } catch(NumberFormatException e){
-            return false;
-        }
+        return winner;
     }
 }

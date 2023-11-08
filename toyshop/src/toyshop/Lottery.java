@@ -1,13 +1,23 @@
 package toyshop;
 
+import exceptions.FileInitException;
+
 public interface Lottery {
+//    Представлены методы, обязательные по ТЗ
     /**
-    * Метод добавляет элемент типа Toy в коллекцию PriorityQueue
+     * Метод добавляет элемент типа Toy в коллекцию PriorityQueue
      */
     void put(String string);
 
     /**
-    * Метод возвращает ID победителя розыгрыша
+     * Метод позволяет изменить вес игрушки
      */
-    int get();
+    void changeWeight(int id, int newWeight);
+
+    /**
+     * Метод возвращает ID победителя розыгрыша,
+     * записывает победителя в файл,
+     * убирает победителя из коллекции PriorityQueue
+     */
+    void get() throws FileInitException;
 }

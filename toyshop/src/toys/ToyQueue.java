@@ -17,6 +17,11 @@ public class ToyQueue implements Iterable<Toy>{
     public void add(Toy toy) {
         queue.add(toy);
     }
+
+    public void delete(Toy toy) {
+        queue.remove(toy);
+    }
+
     public int size() {
         return queue.size();
     }
